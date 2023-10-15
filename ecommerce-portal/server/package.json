@@ -1,7 +1,7 @@
 {
-  "name": "api",
+  "name": "server",
   "version": "1.0.0",
-  "description": "Raccoon Ecommerce",
+  "description": "Raccoon server Ecommerce-Portal Template",
   "main": "index.js",
   "scripts": {
     "start": "tsc && node dist/index.js",
