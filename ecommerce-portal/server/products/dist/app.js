@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Server = void 0;
 const express_1 = __importDefault(require("express"));
-const http_proxy_middleware_1 = require("http-proxy-middleware");
 const morgan_1 = __importDefault(require("morgan"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const cors_1 = __importDefault(require("cors"));
@@ -34,12 +33,8 @@ class Server {
         });
     }
     routes() {
-        // Error catching endware        
-        this.app.use("/", routes_1.default);
-        this.app.use("/products", (0, http_proxy_middleware_1.createProxyMiddleware)({
-            target: "http://localhost:3002",
-            changeOrigin: true
-        }));
+        const router = express_1.default.Router();
+        this.app.use("/products", routes_1.default);
         this.app.use((err, req, res, next) => {
             res.status(500).json({
                 error: true,
@@ -48,8 +43,8 @@ class Server {
         });
     }
     start() {
-        this.app.listen(this.app.get('port'), () => {
-            console.log('Server is listening on port', this.app.get('port'));
+        this.app.listen(this.app.get("port"), () => {
+            console.log(`Server is listening on port`, this.app.get("port"));
         });
     }
 }
