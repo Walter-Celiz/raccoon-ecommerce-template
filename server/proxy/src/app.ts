@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import { createProxyMiddleware } from "http-proxy-middleware";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -31,12 +32,18 @@ class Server {
         });
     }
 
-    public routes(): void {
-        const router: express.Router = express.Router();        
-        // Error catching endware
-        this.app.use("/api", indexRoutes);
+    public routes() {        
+        // Error catching endware        
+        this.app.use("/", indexRoutes);
+        this.app.use("/products", createProxyMiddleware({
+            target: "http://localhost:3002",
+            changeOrigin: true
+        }));
         this.app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-            res.status(500).json({message: err.message});
+            res.status(500).json({
+                error: true,
+                message: err.message
+            });
         });
     }
 
