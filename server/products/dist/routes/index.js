@@ -25,7 +25,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const controllers = __importStar(require("../controllers"));
-class VideogameRoutes {
+class ProductRoutes {
     constructor() {
         this.router = (0, express_1.Router)();
         this.routes();
@@ -34,6 +34,6 @@ class VideogameRoutes {
         this.router.get("/", controllers.getProducts);
     }
 }
-const indexRoutes = new VideogameRoutes();
+const indexRoutes = new ProductRoutes();
 indexRoutes.routes();
 exports.default = indexRoutes.router;
